@@ -109,6 +109,7 @@ const Interface = function(daemons) {
     // HTTP Timeout Handling
     req.on('socket', (socket) => {
       socket.setTimeout(3000);
+      socket.removeAllListeners('timeout');
       socket.on('timeout', () => {
         req.abort();
       });
