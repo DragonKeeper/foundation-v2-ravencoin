@@ -1232,6 +1232,7 @@ const Pool = function(config, configMain, callback) {
 
   // Setup First Job on Startup
   this.setupFirstJob = function(callback) {
+    
     // Request Primary/Auxiliary Templates
     _this.handleAuxiliaryTemplate((error) => {
       if (error) _this.emitLog('error', false, _this.text.stratumFirstJobText1());
