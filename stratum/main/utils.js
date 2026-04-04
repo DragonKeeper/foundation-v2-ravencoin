@@ -1,12 +1,18 @@
 // Declare all module variables at the very top to avoid temporal dead zone issues
-let bchaddr, bech32, bs58check, crypto, merkleTree, net;
+let bchaddr, bech32, bs58check, crypto, merkleTree, net, randomBytes, createHash;
 
 // Define loadCommonJSModules and ensureModules before any usage
 const loadCommonJSModules = async () => {
   if (!bchaddr) bchaddr = (await import('bchaddrjs')).default || (await import('bchaddrjs'));
   if (!bech32) bech32 = (await import('bech32')).default || (await import('bech32'));
   if (!bs58check) bs58check = (await import('bs58check')).default || (await import('bs58check'));
-  if (!crypto) crypto = (await import('crypto')).default || (await import('crypto'));
+  if (!crypto || !randomBytes || !createHash) {
+    const cryptoModule = (await import('crypto')).default || (await import('crypto'));
+    crypto = cryptoModule;
+    randomBytes = cryptoModule.randomBytes;
+    createHash = cryptoModule.createHash;
+
+  }
   if (!merkleTree) merkleTree = (await import('merkle-lib')).default || (await import('merkle-lib'));
   if (!net) net = (await import('net')).default || (await import('net'));
 };
